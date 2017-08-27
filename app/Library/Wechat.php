@@ -19,6 +19,10 @@ class Wechat
     const SNS_AUTH = '/sns/auth';
     const SNS_USERINFO = '/sns/userinfo';
 
+    /**
+     * @param $code
+     * @return bool|mixed
+     */
     public static function getAccessToken($code)
     {
         $params['appid'] = config('services.wechat.app_id');
@@ -31,6 +35,10 @@ class Wechat
             'App\Library\Wechat::processResponse');
     }
 
+    /**
+     * @param $refresh_token
+     * @return bool|mixed
+     */
     public static function refreshAccessToken($refresh_token)
     {
         $params['appid'] = config('services.wechat.app_id');
@@ -42,6 +50,11 @@ class Wechat
             'App\Library\Wechat::processResponse');
     }
 
+    /**
+     * @param $access_token
+     * @param $open_id
+     * @return bool|mixed
+     */
     public static function getUserInfo($access_token, $open_id)
     {
         $params['access_token'] = $access_token;
@@ -52,6 +65,11 @@ class Wechat
             'App\Library\Wechat::processResponse');
     }
 
+    /**
+     * @param $access_token
+     * @param $open_id
+     * @return bool|mixed
+     */
     public static function isTokenValid($access_token, $open_id)
     {
         $params['access_token'] = $access_token;
@@ -62,9 +80,14 @@ class Wechat
             'App\Library\Wechat::processResponse');
     }
 
+    /**
+     * @param $ret
+     * @return mixed
+     * @throws BaheException
+     */
     public static function processResponse($ret)
     {
-        if (empty($ret) || $ret['errcode']) {
+        if (empty($ret)) {
             throw new BaheException(BaheException::API_CLIENT_CALL_FAIL);
         }
 

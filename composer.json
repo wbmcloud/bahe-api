@@ -8,7 +8,8 @@
         "php": ">=5.6.4",
         "laravel/lumen-framework": "5.4.*",
         "vlucas/phpdotenv": "~2.2",
-        "firebase/php-jwt": "v5.0.0"
+        "firebase/php-jwt": "v5.0.0",
+        "predis/predis": "v1.1.1"
     },
     "autoload": {
         "psr-4": {

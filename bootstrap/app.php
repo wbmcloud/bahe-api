@@ -48,6 +48,13 @@ $app->singleton(
     App\Console\Kernel::class
 );
 
+$app->singleton('redis', function () {
+    return new \Predis\Client([
+        'scheme' => 'tcp',
+        'host'   => env('REDIS_HOST'),
+        'port'   => env('REDIS_PORT'),
+    ]);
+});
 /*
 |--------------------------------------------------------------------------
 | Register Middleware
