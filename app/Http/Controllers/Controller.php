@@ -32,6 +32,6 @@ class Controller extends BaseController
     {
         !empty($data) && is_array($data) && ($this->ret['data'] = $data);
 
-        return json_encode($this->ret);
+        return response()->json($this->ret);
     }
 }
