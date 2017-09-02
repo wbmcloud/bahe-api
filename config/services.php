@@ -15,5 +15,11 @@ return [
             'code' => '',
             'message' => '',
         ]
+    ],
+    'client' => [
+        'cy' => [
+            'app_id' => 'snve1zlao934hhh323',
+            'app_secret' => 'fiejfAJG%139*&sdfjNMJQA',
+        ]
     ]
 ];

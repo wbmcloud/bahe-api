@@ -58,7 +58,7 @@ class Handler extends ExceptionHandler
 
     protected function jsonException($code, $message)
     {
-        return json_encode([
+        return response()->json([
             'code'       => $code,
             'message'    => $message,
             'request_id' => BContext::getRequestId(),
