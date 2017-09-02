@@ -15,4 +15,5 @@ $app->get('auth/jwt', 'AuthController@jwtAction');
 
 $app->group(['middleware' => ['validator', 'auth']], function () use ($app) {
     $app->get('wechat/userinfo', 'WechatController@userInfoAction');
+    $app->get('maintain/server', 'MaintainController@serverAction');
 });

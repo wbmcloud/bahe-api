@@ -16,7 +16,7 @@ class AuthMiddleware
      */
     public function handle($request, Closure $next)
     {
-        $jwt = $request->header('jwt');
+        $jwt = $request->header('JWT');
         if (empty($jwt)) {
             throw new BaheException(BaheException::JWT_NOT_EXIST);
         }

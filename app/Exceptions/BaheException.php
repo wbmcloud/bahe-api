@@ -32,6 +32,7 @@ class BaheException extends \Exception
         self::API_CLIENT_CALL_FAIL => '接口调用失败',
         self::API_ARGS_NOT_VALID => '参数不合法',
         self::API_NOT_FOUND => 'API不存在',
+        self::JWT_NOT_EXIST => 'JWT不存在',
         self::JWT_NOT_VALID => 'JWT不合法',
         self::WECHAT_CODE_NOT_VALID => 'code不合法',
         self::WECHAT_REFRESH_TOKEN_NOT_VALID => 'refresh_token不合法'
