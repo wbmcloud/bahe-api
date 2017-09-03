@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Common\Constant\CacheConst;
 use App\Common\Constant\MaintainConst;
+use App\Library\Redis;
 
 class MaintainController extends Controller
 {
@@ -14,7 +15,7 @@ class MaintainController extends Controller
             'tips' => '',
         ];
 
-        $value = app('redis')->get(CacheConst::SERVER_DOWN_MAINTAIN);
+        $value = Redis::get(CacheConst::SERVER_DOWN_MAINTAIN);
         if (empty($value)) {
             return $this->jsonResponse($ret);
         }
