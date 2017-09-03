@@ -67,12 +67,12 @@ $app->singleton('redis', function () {
 |
 */
 
-// $app->middleware([
-//    App\Http\Middleware\ExampleMiddleware::class
-// ]);
+$app->middleware([
+    \App\Http\Middleware\BeforeMiddleware::class
+]);
 
 $app->routeMiddleware([
-    'auth'      => App\Http\Middleware\AuthMiddleware::class,
+    'auth'      => \App\Http\Middleware\AuthMiddleware::class,
     'validator' => \App\Http\Middleware\ParamsValidator::class,
 ]);
 

@@ -3,7 +3,9 @@
 namespace App\Exceptions;
 
 use App\Library\BContext;
+use App\Library\BLogger;
 use Exception;
+use Firebase\JWT\ExpiredException;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -35,7 +37,7 @@ class Handler extends ExceptionHandler
      */
     public function report(Exception $e)
     {
-        parent::report($e);
+        // parent::report($e);
     }
 
     /**
@@ -49,10 +51,29 @@ class Handler extends ExceptionHandler
     {
         $code    = $e->getCode();
         $message = $e->getMessage();
+
+        $log_info = [
+            'code' => $code,
+            'message' => $message,
+            'file' => $e->getFile(),
+            'line' => $e->getLine(),
+            'request' => $request->all(),
+        ];
+        if ($code > 2001000) {
+            // 业务异常日志
+            BLogger::warning($log_info);
+        } else {
+            BLogger::error($log_info);
+        }
+
         if ($e instanceof NotFoundHttpException) {
             $code = BaheException::API_NOT_FOUND;
             $message = BaheException::$error_msg[BaheException::API_NOT_FOUND];
+        } elseif ($e instanceof ExpiredException) {
+            $code = BaheException::JWT_NOT_VALID;
+            $message = BaheException::$error_msg[BaheException::JWT_NOT_VALID];
         }
+
         return $this->jsonException($code, $message);
     }
 

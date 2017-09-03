@@ -12,6 +12,7 @@ class ParamsRules
 {
 
     const IF_WECHAT_USREINFO   = '/wechat/userinfo';
+    const IF_AUTH_JWT = '/auth/jwt';
 
     /**
      * @var array
@@ -21,5 +22,11 @@ class ParamsRules
         self::IF_WECHAT_USREINFO              => [
             'code'        => 'required|string',
         ],
+        self::IF_AUTH_JWT => [
+            'app_id' => 'required|string',
+            'time' => 'required|string',
+            'nonce' => 'required|string|size:7',
+            'sign' => 'required|string',
+        ]
     ];
 }

@@ -10,7 +10,7 @@ namespace App\Library;
 
 use App\Common\Utils\SystemTool;
 use App\Exceptions\BaheException;
-use Illuminate\Support\Facades\Request;
+use Monolog\Handler\RotatingFileHandler;
 use Monolog\Logger;
 use Illuminate\Log\Writer;
 
@@ -61,12 +61,13 @@ class BLogger
     {
         if (!isset(self::$loggers[$type]) || empty(self::$loggers[$type])) {
             if ($type === self::LOG_DB) {
-                self::$loggers[$type] = new Writer(new Logger(self::LOG_INFO));
+                self::$loggers[$type] = new Logger(self::LOG_INFO);
             } else {
-                self::$loggers[$type] = new Writer(new Logger($type));
+                self::$loggers[$type] = new Logger($type);
             }
-            $log_file_path = storage_path() . '/logs/' . config('app.name') . '-' . $type . '.log';
-            self::$loggers[$type]->useDailyFiles($log_file_path);
+            $log_file_path = storage_path() . '/logs/' . env('APP_NAME', 'default') . '-' . $type . '.log';
+            self::$loggers[$type]->pushHandler(
+                new RotatingFileHandler($log_file_path));
         }
 
         return self::$loggers[$type];
@@ -128,9 +129,9 @@ class BLogger
             'client_ip'  => isset($_REQUEST['REMOTE_ADDR']) ? $_SERVER['REMOTE_ADDR'] : '',
             'consume'    => round(microtime(true) - BContext::getRequestTime(), 3),
             'input'      => [
-                'url'      => Request::fullUrl(),
-                'header'   => Request::header(),
-                'request'  => Request::all(),
+                'url'      => app('request')->fullUrl(),
+                'header'   => app('request')->header(),
+                'request'  => app('request')->all(),
                 'response' => $message,
             ]
         ];

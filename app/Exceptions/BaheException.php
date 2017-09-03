@@ -17,6 +17,7 @@ class BaheException extends \Exception
     const API_NOT_FOUND = 100103;
     const API_ARGS_NOT_VALID = 100104;
     const API_SIG_NOT_VALID = 100105;
+    const API_REQUEST_NOT_VALID = 100106;
 
     const JWT_NOT_EXIST = 200100;
     const JWT_NOT_VALID = 200101;
@@ -25,6 +26,10 @@ class BaheException extends \Exception
     const WECHAT_REFRESH_TOKEN_NOT_VALID = 200201;
 
     const SYS_CONFIG_NOT_FOUND = 200300;
+
+    const APP_ID_NOT_VALID = 200400;
+    const APP_TIME_NOT_VALID = 200401;
+    const APP_NONCE_NOT_VALID = 200402;
 
     public static $error_msg = [
         self::API_CLIENT_MISS_CONFIG => '配置文件不存在',
@@ -38,6 +43,10 @@ class BaheException extends \Exception
         self::WECHAT_CODE_NOT_VALID => 'code不合法',
         self::WECHAT_REFRESH_TOKEN_NOT_VALID => 'refresh_token不合法',
         self::SYS_CONFIG_NOT_FOUND => '配置文件未找到',
+        self::API_REQUEST_NOT_VALID => '非法请求',
+        self::APP_ID_NOT_VALID => 'APPID不合法',
+        self::APP_TIME_NOT_VALID => '时间不合法',
+        self::APP_NONCE_NOT_VALID => '随机串不合法',
     ];
 
     public function __construct($code, $message = null)
