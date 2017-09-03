@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Common\Constant\CacheConst;
 use App\Common\Utils\SystemTool;
 use App\Exceptions\BaheException;
-use App\Library\BLogger;
 use Firebase\JWT\JWT;
 
 class AuthController extends Controller

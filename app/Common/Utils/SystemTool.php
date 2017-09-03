@@ -2,8 +2,6 @@
 
 namespace App\Common\Utils;
 
-use App\Library\BLogger;
-
 class SystemTool
 {
     /**
