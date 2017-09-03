@@ -15,6 +15,10 @@ class Redis
             $value = json_encode($value);
         }
 
-        app('redis')->set($key, $value, null);
+        if (!empty($expire)) {
+            app('redis')->setex($key, $expire, $value);
+        } else {
+            app('redis')->set($key, $value);
+        }
     }
 }

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Common\Constant\CacheConst;
 use App\Common\Utils\SystemTool;
 use App\Exceptions\BaheException;
+use App\Library\Redis;
 use Firebase\JWT\JWT;
 
 class AuthController extends Controller
@@ -23,11 +24,12 @@ class AuthController extends Controller
         }
 
         // 防止重放攻击
-        $value = app('redis')->get(CacheConst::JWT_NONCE);
+        $value = Redis::get(CacheConst::JWT_NONCE);
         if (!empty($value) && ($params['nonce'] == $value)) {
             throw new BaheException(BaheException::APP_NONCE_NOT_VALID);
         }
-        app('redis')->setex(CacheConst::JWT_NONCE, CacheConst::$cache_alive[CacheConst::JWT_NONCE], $params['nonce']);
+        Redis::set(CacheConst::JWT_NONCE, $params['nonce'],
+            CacheConst::$cache_alive[CacheConst::JWT_NONCE]);
 
         // 校验签名
         $app_secret = config('services.client.cy.app_secret');
