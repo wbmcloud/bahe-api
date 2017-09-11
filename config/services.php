@@ -21,5 +21,13 @@ return [
             'app_id' => 'snve1zlao934hhh323',
             'app_secret' => 'fiejfAJG%139*&sdfjNMJQA',
         ]
+    ],
+    'file' => [
+        'path' => '/data/game/file/',
+        'sub_dir' => [
+            'assets',
+            'lua'
+        ],
+        'patch_name' => 'update_patch.zip',
     ]
 ];
