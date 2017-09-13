@@ -72,6 +72,9 @@ class Handler extends ExceptionHandler
         } elseif ($e instanceof ExpiredException) {
             $code = BaheException::JWT_NOT_VALID;
             $message = BaheException::$error_msg[BaheException::JWT_NOT_VALID];
+        } elseif ($e instanceof ValidationException) {
+            $code = BaheException::API_ARGS_NOT_VALID;
+            $message = BaheException::$error_msg[BaheException::API_ARGS_NOT_VALID];
         }
 
         return $this->jsonException($code, $message);

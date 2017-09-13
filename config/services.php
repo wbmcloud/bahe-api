@@ -24,10 +24,6 @@ return [
     ],
     'file' => [
         'path' => '/data/game/file/',
-        'sub_dir' => [
-            'assets',
-            'lua'
-        ],
-        'patch_name' => 'update_patch.zip',
+        'patch_name' => 'MyAssets.upk',
     ]
 ];
