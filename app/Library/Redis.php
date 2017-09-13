@@ -8,7 +8,7 @@ class Redis
     {
         $key = self::getKey($key);
 
-        return unserialize(app('redis')->get($key));
+        return self::unserialize(app('redis')->get($key));
     }
 
     public static function set($key, $value, $expire = null)
@@ -16,7 +16,7 @@ class Redis
         $key = self::getKey($key);
 
         if (is_array($value)) {
-            $value = serialize($value);
+            $value = self::serialize($value);
         }
 
         if (!empty($expire)) {
@@ -29,5 +29,27 @@ class Redis
     private static function getKey($key)
     {
         return env('CACHE_PREFIX', 'laravel') . ':' . $key;
+    }
+
+    /**
+     * Serialize the value.
+     *
+     * @param  mixed  $value
+     * @return mixed
+     */
+    public static function serialize($value)
+    {
+        return is_numeric($value) ? $value : serialize($value);
+    }
+
+    /**
+     * Unserialize the value.
+     *
+     * @param  mixed  $value
+     * @return mixed
+     */
+    public static function unserialize($value)
+    {
+        return is_numeric($value) ? $value : unserialize($value);
     }
 }
