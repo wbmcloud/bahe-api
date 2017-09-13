@@ -8,7 +8,7 @@ class Redis
     {
         $key = self::getKey($key);
 
-        return json_decode(app('redis')->get($key), true);
+        return unserialize(app('redis')->get($key));
     }
 
     public static function set($key, $value, $expire = null)
@@ -16,7 +16,7 @@ class Redis
         $key = self::getKey($key);
 
         if (is_array($value)) {
-            $value = json_encode($value);
+            $value = serialize($value);
         }
 
         if (!empty($expire)) {
