@@ -18,6 +18,7 @@ class BaheException extends \Exception
     const API_ARGS_NOT_VALID = 100104;
     const API_SIG_NOT_VALID = 100105;
     const API_REQUEST_NOT_VALID = 100106;
+    const API_UNKNOWN_ERROR = 100107;
 
     const JWT_NOT_EXIST = 200100;
     const JWT_NOT_VALID = 200101;
@@ -47,6 +48,8 @@ class BaheException extends \Exception
         self::APP_ID_NOT_VALID => 'APPID不合法',
         self::APP_TIME_NOT_VALID => '时间不合法',
         self::APP_NONCE_NOT_VALID => '随机串不合法',
+        self::API_UNKNOWN_ERROR => '未知错误',
+
     ];
 
     public function __construct($code, $message = null)
