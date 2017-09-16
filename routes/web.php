@@ -16,6 +16,7 @@ $app->group(['middleware' => ['validator']], function () use ($app) {
 
     $app->group(['middleware' => ['auth']], function () use ($app) {
         $app->get('wechat/userinfo', 'WechatController@userInfoAction');
+        $app->post('wechat/userinfo', 'WechatController@userInfoAction');
         $app->get('maintain/server', 'MaintainController@serverAction');
         $app->post('maintain/server', 'MaintainController@serverAction');
         $app->get('game/hotupdate', 'GameController@hotUpdateAction');

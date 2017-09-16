@@ -75,7 +75,7 @@ class Handler extends ExceptionHandler
         } elseif ($e instanceof ValidationException) {
             $code = BaheException::API_ARGS_NOT_VALID;
             $message = BaheException::$error_msg[BaheException::API_ARGS_NOT_VALID];
-        } else {
+        } elseif ($e->getCode() == 0) {
             $code = BaheException::API_UNKNOWN_ERROR;
             $message = BaheException::$error_msg[BaheException::API_UNKNOWN_ERROR];
         }

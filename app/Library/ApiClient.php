@@ -47,21 +47,19 @@ class ApiClient
 
             return false;
         }
+        $config = config('services.' . $service);
         $log              = self::_logMessage($api_config, $start_time, $ret);
-        $result_conf      = self::config[$service]['result'];
+        $result_conf      = $config['result'];
         $error_code_field = self::_resolveData($result_conf['error_code_field'], $ret);
         if ($error_code_field != $result_conf['error_code_success']) {
             self::errorLog($log);
             if (is_callable($data_callback)) {
-                call_user_func($data_callback, $ret);
+                return call_user_func($data_callback, $ret);
             }
 
             return false;
         }
         self::log($log);
-        if (is_callable($data_callback)) {
-            call_user_func($data_callback, $ret);
-        }
         $data = self::_resolveData($result_conf['error_data_field'], $ret);
 
         return $data;
@@ -70,10 +68,13 @@ class ApiClient
     //解析结果配置格式
     protected static function _resolveData($field_str, $data)
     {
+        if (empty($field_str)) {
+            return $data;
+        }
         $error_code_field_array = explode('/', $field_str);
         $item                   = $data;
         foreach ($error_code_field_array as $value) {
-            $item = $item[$value];
+            $item = isset($item[$value]) ? $item[$value] : '';
         }
 
         return $item;
@@ -158,6 +159,9 @@ class ApiClient
      */
     protected static function getFullUrl($config, $path)
     {
+        if ($config['port'] == 80) {
+            return $config['schema'] . '://' . $config['host'] . $path;
+        }
         return $config['schema'] . '://' . $config['host'] . ':' . $config['port'] . $path;
     }
 
@@ -173,8 +177,7 @@ class ApiClient
     {
         $params = is_array($params) ? http_build_query($params) : $params;
         if (isset($server_config['ssl']) && $server_config['ssl']) {
-            curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, true);
-            curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, true);
+            curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
         }
 
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
