@@ -11,6 +11,6 @@ class CacheConst
     const HOT_UPDATE_FILE_MD5 = 'HOT_UPDATE_FILE_MD5';
 
     public static $cache_alive = [
-        self::JWT_NONCE => 300,
+        self::JWT_NONCE => 60,
     ];
 }

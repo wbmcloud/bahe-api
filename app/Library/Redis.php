@@ -15,9 +15,7 @@ class Redis
     {
         $key = self::getKey($key);
 
-        if (is_array($value)) {
-            $value = self::serialize($value);
-        }
+        $value = self::serialize($value);
 
         if (!empty($expire)) {
             app('redis')->setex($key, $expire, $value);

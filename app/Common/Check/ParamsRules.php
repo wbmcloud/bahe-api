@@ -20,7 +20,8 @@ class ParamsRules
      */
     public static $rules = [
         self::IF_WECHAT_USREINFO              => [
-            'code'        => 'required|string',
+            'code'        => 'string|nullable',
+            'open_id'     => 'string|nullable',
         ],
         self::IF_AUTH_JWT => [
             'app_id' => 'required|string',

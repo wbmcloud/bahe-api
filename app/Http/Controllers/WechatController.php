@@ -41,12 +41,11 @@ class WechatController extends Controller
         if (isset($user_info['errcode']) && !empty($user_info['errcode'])) {
             // 不合法的access_token，需要调用refresh_token进行刷新
             $ret = Wechat::refreshAccessToken($ret['access_token']);
-            if (isset($user_info['errcode']) && !empty($user_info['errcode'])) {
+            if (isset($ret['errcode']) && !empty($ret['errcode'])) {
                 throw new BaheException(BaheException::WECHAT_REFRESH_TOKEN_NOT_VALID);
             }
             Redis::set(WechatConst::APP_ACCESS_TOKEN . $ret['openid'], $ret);
         }
-        $user_info = Wechat::getUserInfo($ret['access_token'], $ret['openid']);
 
         Redis::set(WechatConst::APP_USER_INFO . $ret['openid'], $user_info,
             WechatConst::USER_INFO_CACHE_TIME);
