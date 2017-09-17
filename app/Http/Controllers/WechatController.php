@@ -40,7 +40,7 @@ class WechatController extends Controller
         $user_info = Wechat::getUserInfo($ret['access_token'], $ret['openid']);
         if (isset($user_info['errcode']) && !empty($user_info['errcode'])) {
             // 不合法的access_token，需要调用refresh_token进行刷新
-            $ret = Wechat::refreshAccessToken($ret['access_token']);
+            $ret = Wechat::refreshAccessToken($ret['refresh_token']);
             if (isset($ret['errcode']) && !empty($ret['errcode'])) {
                 throw new BaheException(BaheException::WECHAT_REFRESH_TOKEN_NOT_VALID);
             }

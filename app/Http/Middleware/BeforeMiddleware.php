@@ -17,10 +17,10 @@ class BeforeMiddleware
     public function handle($request, Closure $next)
     {
         // 判断ua
-        $ua = $request->header('User-Agent');
+        /*$ua = $request->header('User-Agent');
         if (!preg_match("/BH-MJProject/", $ua)) {
             throw new BaheException(BaheException::API_REQUEST_NOT_VALID);
-        }
+        }*/
 
         return $next($request);
     }
