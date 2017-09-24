@@ -8,7 +8,7 @@ return [
         'port' => 80,
         'connect_timeout_ms' => 1000,
         'read_timeout_ms' => 2000,
-        'retry' => 1,
+        'retry' => 3,
         'is_sign' => false,
         'app_id' => 'wx5763b38a2613f9fb',
         'app_secret' => 'f9128ba451c51ce44fdd3bddf2fa45e7',

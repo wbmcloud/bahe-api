@@ -34,6 +34,9 @@ class WechatController extends Controller
             }*/
             // 获取access_token
             $ret = Redis::get(WechatConst::APP_ACCESS_TOKEN . $open_id);
+            if (empty($ret)) {
+                throw new BaheException(BaheException::WECHAT_CODE_NOT_VALID);
+            }
         }
 
         // 获取用户信息
@@ -45,6 +48,8 @@ class WechatController extends Controller
                 throw new BaheException(BaheException::WECHAT_REFRESH_TOKEN_NOT_VALID);
             }
             Redis::set(WechatConst::APP_ACCESS_TOKEN . $ret['openid'], $ret);
+
+            $user_info = Wechat::getUserInfo($ret['access_token'], $ret['openid']);
         }
 
         Redis::set(WechatConst::APP_USER_INFO . $ret['openid'], $user_info,
