@@ -30,7 +30,7 @@ class WechatController extends Controller
             // 获取用户信息
             $ret = Redis::get(WechatConst::APP_USER_INFO . $open_id);
             if (!empty($ret)) {
-                return $ret;
+                return $this->jsonResponse($ret);
             }
             // 获取access_token
             $ret = Redis::get(WechatConst::APP_ACCESS_TOKEN . $open_id);
