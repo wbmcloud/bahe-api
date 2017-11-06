@@ -26,6 +26,6 @@ return [
     ],
     'file' => [
         'path' => '/data/game/file/',
-        'patch_name' => 'MyAssets.upk',
+        'patch_name' => 'MyAssets_issue%s.upk',
     ]
 ];
