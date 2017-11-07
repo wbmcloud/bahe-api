@@ -50,4 +50,11 @@ class Redis
     {
         return is_numeric($value) ? $value : unserialize($value);
     }
+
+    public static function hmget($hash, array $keys)
+    {
+        return array_map(function ($issue) {
+            return self::unserialize($issue);
+        }, app('redis')->hmget(self::getKey($hash), $keys));;
+    }
 }

@@ -14,6 +14,7 @@ class ParamsRules
     const IF_WECHAT_USREINFO   = '/wechat/userinfo';
     const IF_AUTH_JWT = '/auth/jwt';
     const IF_GAME_DOWNLOAD = '/game/download';
+    const IF_GAME_HOTUPDATE = '/game/hotupdate';
 
     /**
      * @var array
@@ -31,7 +32,10 @@ class ParamsRules
             'sign' => 'required|string',
         ],
         self::IF_GAME_DOWNLOAD => [
-            'issue' => 'required|integer',
+            'ver' => 'required|integer',
+        ],
+        self::IF_GAME_DOWNLOAD => [
+            'ver' => 'nullable|integer',
         ],
     ];
 }

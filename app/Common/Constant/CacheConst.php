@@ -8,9 +8,9 @@ class CacheConst
 
     const JWT_NONCE = 'JWT_NONCE';
 
-    const HOT_UPDATE_FILE_MD5 = 'HOT_UPDATE_FILE_MD5_';
+    const HOT_UPDATE_FILE_ISSUES = 'HOT_UPDATE_FILE_ISSUES';
 
-    const HOT_UPDATE_VERSION_ISSUE = 'HOT_UPDATE_VERSION_ISSUE';
+    const HOT_UPDATE_ISSUE_VERSION = 'HOT_UPDATE_ISSUE_VERSION';
 
     public static $cache_alive = [
         self::JWT_NONCE => 60,

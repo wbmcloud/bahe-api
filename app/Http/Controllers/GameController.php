@@ -18,23 +18,35 @@ class GameController extends Controller
             $file = file_get_contents($path . $patch_name);
             $md5 = md5($file);
         }*/
-        $issue = Redis::get(CacheConst::HOT_UPDATE_VERSION_ISSUE);
-        $md5 = Redis::get(CacheConst::HOT_UPDATE_FILE_MD5 . $issue);
+        $client_ver = app('request')->input('ver');
+        $version = Redis::get(CacheConst::HOT_UPDATE_ISSUE_VERSION);
+        if (!empty($client_ver)) {
+            // 获取所有的列表
+            $issues = Redis::hmget(CacheConst::HOT_UPDATE_FILE_ISSUES, range($client_ver + 1, $version));
 
-        return $this->jsonResponse([
-            'file_name' => sprintf(config('services.file.patch_name'), $issue),
-            'issue' => $issue,
-            'md5' => $md5,
-        ]);
+        } else {
+            $issues = Redis::hmget(CacheConst::HOT_UPDATE_FILE_ISSUES, range(1, $version));
+        }
+
+        $issues = array_map(function ($issue) {
+            return [
+                'name' => $issue['name'],
+                'md5' => $issue['md5'],
+                'size' => $issue['size'],
+                'version' => $issue['version'],
+            ];
+        }, $issues);
+
+        return $this->jsonResponse(['issues' => $issues]);
     }
 
     public function downLoadAction()
     {
-        $issue = app('request')->input('issue');
+        $ver = app('request')->input('ver');
 
         $path = config('services.file.path');
         $patch_name = config('services.file.patch_name');
-        $patch_name = sprintf($patch_name, $issue);
+        $patch_name = sprintf($patch_name, $ver);
 
         return response()->download($path . $patch_name);
     }
