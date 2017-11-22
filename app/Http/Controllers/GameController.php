@@ -20,14 +20,20 @@ class GameController extends Controller
         }*/
         $client_ver = app('request')->input('ver');
         $version = Redis::get(CacheConst::HOT_UPDATE_ISSUE_VERSION);
-        if (!empty($client_ver) && ($client_ver < $version)) {
-            // 获取所有的列表
-            $issues = Redis::hmget(CacheConst::HOT_UPDATE_FILE_ISSUES, range($client_ver + 1, $version));
 
-        } elseif (!empty($client_ver) && ($client_ver >= $version)) {
-            $issues = [];
-        } else {
+        if ($version == false) {
+            return $this->jsonResponse(['issues' => []]);
+        }
+
+        if (empty($client_ver)) {
             $issues = Redis::hmget(CacheConst::HOT_UPDATE_FILE_ISSUES, range(1, $version));
+        } else {
+            if ($client_ver < $version) {
+                // 获取所有的列表
+                $issues = Redis::hmget(CacheConst::HOT_UPDATE_FILE_ISSUES, range($client_ver + 1, $version));
+            } else {
+                $issues = [];
+            }
         }
 
         $issues = array_map(function ($issue) {
