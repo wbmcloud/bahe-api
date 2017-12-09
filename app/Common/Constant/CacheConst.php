@@ -4,7 +4,7 @@ namespace App\Common\Constant;
 
 class CacheConst
 {
-    const SERVER_DOWN_MAINTAIN = 'SERVER_DOWN_MAINTAIN';
+    const SERVER_MAINTAIN_INFO = 'SERVER_MAINTAIN_INFO';
 
     const JWT_NONCE = 'JWT_NONCE';
 

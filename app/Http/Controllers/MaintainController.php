@@ -15,14 +15,15 @@ class MaintainController extends Controller
             'tips' => '',
         ];
 
-        $value = Redis::get(CacheConst::SERVER_DOWN_MAINTAIN);
+        $value = Redis::get(CacheConst::SERVER_MAINTAIN_INFO);
+        
         if (empty($value)) {
             return $this->jsonResponse($ret);
         }
 
         return $this->jsonResponse([
-            'is_running' => false,
-            'tips' => MaintainConst::SERVER_DOWN_MAINTAIN_TEXT,
+            'is_running' => ($value['status'] == 1) ? false : true,
+            'tips' => $value['content'],
         ]);
     }
 }
