@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Common\Constant\WechatConst;
+use App\Common\Utils\SystemTool;
 use App\Exceptions\BaheException;
 use App\Library\Redis;
 use App\Library\Wechat;
@@ -21,7 +22,8 @@ class WechatController extends Controller
 
         if (!empty($code)) {
             // 重新获取access_token
-            $ret = Wechat::getAccessToken($code);
+            $token_info = SystemTool::getTokenInfo(app('request')->header('JWT'));
+            $ret = Wechat::getAccessToken($code, $token_info->client->app_id);
             if (isset($ret['errcode']) && !empty($ret['errcode'])) {
                 throw new BaheException(BaheException::WECHAT_CODE_NOT_VALID);
             }

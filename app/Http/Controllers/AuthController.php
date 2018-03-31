@@ -18,8 +18,9 @@ class AuthController extends Controller
         $params['nonce'] = app('request')->input('nonce');
         $params['sign'] = app('request')->input('sign');
 
+        $client_config = config('services.client');
         // 校验app_id的合法性
-        if ($params['app_id'] != config('services.client.cy.app_id')) {
+        if (!in_array($params['app_id'], array_keys($client_config))) {
             throw new BaheException(BaheException::APP_ID_NOT_VALID);
         }
 
@@ -32,7 +33,7 @@ class AuthController extends Controller
             CacheConst::$cache_alive[CacheConst::JWT_NONCE]);
 
         // 校验签名
-        $app_secret = config('services.client.cy.app_secret');
+        $app_secret = $client_config[$params['app_id']]['app_secret'];
         if (empty($app_secret)) {
             throw new BaheException(BaheException::SYS_CONFIG_NOT_FOUND);
         }
@@ -50,6 +51,9 @@ class AuthController extends Controller
             "iat" => time(),
             "nbf" => time(),
             "exp" => time() + 86400,
+            "client" => [
+                'app_id' => $params['app_id'],
+            ]
         );
 
         return $this->jsonResponse([

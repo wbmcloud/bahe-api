@@ -3,45 +3,55 @@
 namespace App\Http\Controllers;
 
 use App\Common\Constant\CacheConst;
+use App\Common\Utils\SystemTool;
 use App\Library\Redis;
 
 class GameController extends Controller
 {
     public function hotUpdateAction()
     {
-        /*$md5 = Redis::get(CacheConst::HOT_UPDATE_FILE_MD5);
-
-        if (empty($md5)) {
-            $path = config('services.file.path');
-            $patch_name = config('services.file.patch_name');
-
-            $file = file_get_contents($path . $patch_name);
-            $md5 = md5($file);
-        }*/
         $client_ver = app('request')->input('ver');
-        $version = Redis::get(CacheConst::HOT_UPDATE_ISSUE_VERSION);
+        // 解析token
+        $token_info = SystemTool::getTokenInfo(app('request')->header('JWT'));
 
-        if ($version == false) {
-            return $this->jsonResponse(['issues' => []]);
-        }
+        if (!isset($token_info->client->app_id) || SystemTool::isLocalDownload($token_info->client->app_id)) {
+            $version = Redis::get(CacheConst::HOT_UPDATE_ISSUE_VERSION);
 
-        if (empty($client_ver)) {
-            $issues = Redis::hmget(CacheConst::HOT_UPDATE_FILE_ISSUES, range(1, $version));
+            if ($version == false) {
+                return $this->jsonResponse(['issues' => []]);
+            }
+
+            if (empty($client_ver)) {
+                $issues = Redis::hmget(CacheConst::HOT_UPDATE_FILE_ISSUES, range(1, $version));
+            } else {
+                if ($client_ver < $version) {
+                    // 获取所有的列表
+                    $issues = Redis::hmget(CacheConst::HOT_UPDATE_FILE_ISSUES, range($client_ver + 1, $version));
+                } else {
+                    $issues = [];
+                }
+            }
         } else {
-            if ($client_ver < $version) {
-                // 获取所有的列表
-                $issues = Redis::hmget(CacheConst::HOT_UPDATE_FILE_ISSUES, range($client_ver + 1, $version));
+            // 获取当前app的所有更新配置
+            $issues = Redis::hget(CacheConst::GAME_UPDATE_PATCH_CONFIG, $token_info->client->app_id, false);
+            if ($client_ver < count($issues)) {
+                $pos = array_search($client_ver, array_keys(array_column($issues, null, 'version')));
+                if ($pos !== false) {
+                    $issues = array_slice($issues, $pos + 1);
+                }
             } else {
                 $issues = [];
             }
         }
 
-        $issues = array_map(function ($issue) {
+        $issues = array_map(function ($issue) use ($token_info) {
             return [
-                'name' => $issue['name'],
-                'md5' => $issue['md5'],
-                'size' => $issue['size'],
-                'version' => $issue['version'],
+                'id' => isset($issue['id']) ? $issue['id'] : '',
+                'name' => isset($issue['name']) ? $issue['name'] : '',
+                'md5' => isset($issue['md5']) ? $issue['md5'] : '',
+                'size' => isset($issue['size']) ? $issue['size'] : '',
+                'version' => isset($issue['version']) ? $issue['version'] : '',
+                'url' => isset($issue['url']) ? $issue['url'] : '',
             ];
         }, $issues);
 

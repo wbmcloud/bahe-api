@@ -51,10 +51,34 @@ class Redis
         return is_numeric($value) ? $value : unserialize($value);
     }
 
-    public static function hmget($hash, array $keys)
+    public static function hmget($hash, array $keys, $is_serialize = true)
     {
-        return array_map(function ($issue) {
-            return self::unserialize($issue);
+        return array_map(function ($issue) use ($is_serialize) {
+            if ($is_serialize) {
+                return self::unserialize($issue);
+            } else {
+                return json_decode($issue, true);
+            }
         }, app('redis')->hmget(self::getKey($hash), $keys));;
+    }
+
+    public static function hget($hash, $key, $is_serialize = true)
+    {
+        if ($is_serialize) {
+            $issues = app('redis')->hget(self::getKey($hash), $key);
+        } else {
+            $issues = json_decode(app('redis')->hget(self::getKey($hash), $key), true);
+        }
+        if (empty($issues)) {
+            return [];
+        }
+        return array_map(function ($issue) use ($is_serialize) {
+            if ($is_serialize) {
+                return self::unserialize($issue);
+            }
+            if (is_array($issue)) {
+                return $issue;
+            }
+        }, $issues);;
     }
 }

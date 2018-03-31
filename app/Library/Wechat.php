@@ -2,6 +2,8 @@
 
 namespace App\Library;
 
+use App\Common\Constant\CommonConst;
+use App\Common\Utils\SystemTool;
 use App\Exceptions\BaheException;
 
 class Wechat
@@ -21,12 +23,14 @@ class Wechat
 
     /**
      * @param $code
+     * @param $app_id
      * @return bool|mixed
      */
-    public static function getAccessToken($code)
+    public static function getAccessToken($code, $app_id)
     {
-        $params['appid'] = config('services.wechat.app_id');
-        $params['secret'] = config('services.wechat.app_secret');
+        $config = SystemTool::getWxConfig($app_id);
+        $params['appid'] = $config['app_id'];
+        $params['secret'] = $config['app_secret'];
         $params['code'] = $code;
         $params['grant_type'] = 'authorization_code';
 

@@ -2,6 +2,10 @@
 
 namespace App\Common\Utils;
 
+use App\Common\Constant\CommonConst;
+use App\Exceptions\BaheException;
+use Firebase\JWT\JWT;
+
 class SystemTool
 {
     /**
@@ -25,6 +29,7 @@ class SystemTool
                 $use = memory_get_usage(true) / 1024 / 1024;
                 break;
         }
+
         return $use . $unit;
     }
 
@@ -52,5 +57,43 @@ class SystemTool
         $str .= $secret;
 
         return md5($str);
+    }
+
+    /**
+     * @param $token
+     * @return mixed
+     * @throws BaheException
+     */
+    public static function getTokenInfo($token)
+    {
+        static $decode_map;
+
+        if (!empty($decode_map) && isset($decode_map[$token])) {
+            return $decode_map[$token];
+        }
+
+        $key = env('JWT_SECRET');
+        try {
+            $decode_map[$token] = JWT::decode($token, $key, array('HS256'));
+        } catch (\Exception $e) {
+            throw new BaheException(BaheException::JWT_NOT_VALID);
+        }
+
+        return $decode_map[$token];
+    }
+
+    /**
+     * @param $app_id
+     * @return mixed
+     */
+    public static function getWxConfig($app_id)
+    {
+        return config('services.client.' . $app_id . '.wx');
+    }
+
+
+    public static function isLocalDownload($app_id)
+    {
+        return in_array($app_id, array_keys(CommonConst::$local_download_app));
     }
 }

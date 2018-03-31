@@ -15,4 +15,9 @@ class CacheConst
     public static $cache_alive = [
         self::JWT_NONCE => 60,
     ];
+
+    /**
+     * 热更新配置
+     */
+    const GAME_UPDATE_PATCH_CONFIG = 'GAME_UPDATE_PATCH_CONFIG';
 }
