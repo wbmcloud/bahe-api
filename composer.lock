@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "aaf5125cd1203063561d1954a86a5f53",
+    "content-hash": "ce42731d301059198542d8049c3f903b",
     "packages": [
         {
             "name": "doctrine/inflector",
@@ -2178,6 +2178,38 @@
             "time": "2017-06-24T16:45:30+00:00"
         },
         {
+            "name": "verdant/xml2array",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/rentpost/xml2array.git",
+                "reference": "8afd54fbb08c02c32884b5da41ac75d42a14f048"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://files.phpcomposer.com/files/rentpost/xml2array/8afd54fbb08c02c32884b5da41ac75d42a14f048.zip",
+                "reference": "8afd54fbb08c02c32884b5da41ac75d42a14f048",
+                "shasum": ""
+            },
+            "require": {
+                "lib-libxml": "*",
+                "lib-pcre": "*",
+                "php": ">=5.3.2"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Verdant\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Apache-2.0"
+            ],
+            "description": "Convert from XML to array, array to XML, based on libs from lalit.org",
+            "time": "2015-04-23T03:08:15+00:00"
+        },
+        {
             "name": "vlucas/phpdotenv",
             "version": "v2.4.0",
             "source": {
@@ -2231,7 +2263,9 @@
     "packages-dev": [],
     "aliases": [],
     "minimum-stability": "dev",
-    "stability-flags": [],
+    "stability-flags": {
+        "verdant/xml2array": 20
+    },
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {

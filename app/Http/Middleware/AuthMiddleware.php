@@ -22,8 +22,12 @@ class AuthMiddleware
         }
 
         try {
-            SystemTool::getTokenInfo($jwt);
+            $token_info = SystemTool::getTokenInfo($jwt);
         } catch (\Exception $e) {
+            throw new BaheException(BaheException::JWT_NOT_VALID);
+        }
+
+        if (!isset($token_info->client->app_id)) {
             throw new BaheException(BaheException::JWT_NOT_VALID);
         }
 

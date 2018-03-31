@@ -1,0 +1,10 @@
+<xml>
+<serverlist name="营口麻将内服" address="10.236.100.27" port="9227" version="1">
+    <server address="10.236.254.139" name="内服1" os="android,ios,pc" port="9224" weight="1" server_id="1401"/>
+    <server address="10.236.254.139" name="内服2" os="android,ios,pc" port="9224" weight="1" server_id="1402"/>
+</serverlist>
+<serverlist name="营口牛牛内服" address="10.236.100.27" port="9227" version="1">
+    <server address="10.236.254.139" name="内服1" os="android,ios,pc" port="9224" weight="1" server_id="1401"/>
+    <server address="10.236.254.139" name="内服2" os="android,ios,pc" port="9224" weight="1" server_id="1402"/>
+</serverlist>
+</xml>

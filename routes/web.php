@@ -23,6 +23,8 @@ $app->group(['middleware' => ['validator']], function () use ($app) {
         $app->post('game/hotupdate', 'GameController@hotUpdateAction');
         $app->get('game/download', 'GameController@downloadAction');
         $app->post('game/download', 'GameController@downloadAction');
+        $app->get('gate/serverlist', 'GateController@serverListAction');
+        $app->post('gate/serverlist', 'GateController@serverListAction');
     });
 });
 
