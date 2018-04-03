@@ -76,9 +76,7 @@ class Redis
             if ($is_serialize) {
                 return self::unserialize($issue);
             }
-            if (is_array($issue)) {
-                return $issue;
-            }
+            return $issue;
         }, $issues);;
     }
 }
