@@ -24,6 +24,11 @@ $app = new Laravel\Lumen\Application(
 );
 
 $app->configure('services');
+
+$env = env('APP_ENV', 'test');
+
+$app->configure($env);
+
 // $app->withFacades();
 
 // $app->withEloquent();

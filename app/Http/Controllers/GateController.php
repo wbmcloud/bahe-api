@@ -2,20 +2,21 @@
 
 namespace App\Http\Controllers;
 
-use Verdant\XML2Array;
+use App\Common\Utils\SystemTool;
 
 class GateController extends Controller
 {
     public function serverListAction()
     {
-        $xml = file_get_contents(realpath(__DIR__ . '/../../Library/ext/servers.xml'));
-        $config = array(
-            'attributesKey' => 'attributes',
-            'cdataKey'      => 'cdata',
-            'valueKey'      => 'value',
-            'useNamespaces' => true,
-        );
-        $arr = XML2Array::createArray($xml, $config);
-        return $arr;
+        $token_info = SystemTool::getTokenInfo(app('request')->header('JWT'));
+        $app_id = $token_info->client->app_id;
+
+        $env = env('APP_ENV');
+        $server_path = $env . '.client.' . $app_id . '.serverlist';
+        $serverlist = config($server_path);
+
+        return $this->jsonResponse([
+            'serverlist' => $serverlist
+        ]);
     }
 }
