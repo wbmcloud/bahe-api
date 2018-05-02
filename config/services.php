@@ -36,7 +36,16 @@ return [
                 'app_secret' => 'cd69ad3b6df6ad5362887d7cdf8708c1',
             ],
             'city_id' => 2280,
-        ]
+        ],
+        'ew123e9r1alli123fs' => [
+            'app_name' => 'doudizhu',
+            'app_id' => 'ew123e9r1alli123fs',
+            'app_secret' => 'ELkfjIfk@*()*&AHFGBpqiL',
+            'wx' => [
+                'app_id' => 'wxca31a5bc68984f8d',
+                'app_secret' => 'badbaf9b1c078fe8c944b1009fb582e9',
+            ],
+        ],
     ],
     'file' => [
         'path' => '/data/game/file/',
