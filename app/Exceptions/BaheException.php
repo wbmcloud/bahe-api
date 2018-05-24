@@ -32,6 +32,8 @@ class BaheException extends \Exception
     const APP_TIME_NOT_VALID = 200401;
     const APP_NONCE_NOT_VALID = 200402;
 
+    const AGENT_UK_NOT_VALID_CODE = 200403;
+
     public static $error_msg = [
         self::API_CLIENT_MISS_CONFIG => '配置文件不存在',
         self::API_CLIENT_RETURN_NOT_JSON => '返回的非json数据',
@@ -49,6 +51,7 @@ class BaheException extends \Exception
         self::APP_TIME_NOT_VALID => '时间不合法',
         self::APP_NONCE_NOT_VALID => '随机串不合法',
         self::API_UNKNOWN_ERROR => '未知错误',
+        self::AGENT_UK_NOT_VALID_CODE => '代理唯一标识不合法'
 
     ];
 

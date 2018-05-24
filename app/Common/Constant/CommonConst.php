@@ -19,4 +19,7 @@ class CommonConst
     public static $local_download_app = [
         'snve1zlao934hhh323' => self::BIZ_TYPE_CHAOYANG
     ];
+
+    const STATUS_ENABLE = 1;
+    const STATUS_DISABLE = 0;
 }

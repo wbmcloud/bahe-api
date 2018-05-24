@@ -15,6 +15,7 @@ class ParamsRules
     const IF_AUTH_JWT = '/auth/jwt';
     const IF_GAME_DOWNLOAD = '/game/download';
     const IF_GAME_HOTUPDATE = '/game/hotupdate';
+    const IF_GAME_BINDAGENT = '/game/bindagent';
 
     /**
      * @var array
@@ -36,6 +37,11 @@ class ParamsRules
         ],
         self::IF_GAME_DOWNLOAD => [
             'ver' => 'nullable|integer',
+        ],
+        self::IF_GAME_BINDAGENT => [
+            'player_id' => 'required|numeric',
+            'agent_id' => 'required|numeric',
+            'type' => 'required|numeric',
         ],
     ];
 }
