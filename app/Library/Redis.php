@@ -77,6 +77,11 @@ class Redis
                 return self::unserialize($issue);
             }
             return $issue;
-        }, $issues);;
+        }, $issues);
+    }
+
+    public static function hset($hash, $key, $value)
+    {
+        return app('redis')->hset(self::getKey($hash), $key, $value);
     }
 }

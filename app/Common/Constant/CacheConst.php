@@ -20,4 +20,9 @@ class CacheConst
      * 热更新配置
      */
     const GAME_UPDATE_PATCH_CONFIG = 'GAME_UPDATE_PATCH_CONFIG';
+
+    /**
+     * 服务器列表配置
+     */
+    const GAME_SERVER_LIST_CONFIG = 'GAME_SERVER_LIST_CONFIG';
 }

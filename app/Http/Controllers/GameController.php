@@ -16,6 +16,7 @@ class GameController extends Controller
     public function hotUpdateAction()
     {
         $client_ver = app('request')->input('ver');
+        $platform = app('request')->input('platform');
         // 解析token
         $token_info = SystemTool::getTokenInfo(app('request')->header('JWT'));
 
@@ -39,6 +40,9 @@ class GameController extends Controller
         } else {
             // 获取当前app的所有更新配置
             $issues = Redis::hget(CacheConst::GAME_UPDATE_PATCH_CONFIG, $token_info->client->app_id, false);
+            if (isset($issues[$platform]) && !empty($issues[$platform])) {
+                $issues = $issues[$platform];
+            }
             if ($client_ver < count($issues)) {
                 $pos = array_search($client_ver, array_keys(array_column($issues, null, 'version')));
                 if ($pos !== false) {
@@ -66,10 +70,20 @@ class GameController extends Controller
     public function downLoadAction()
     {
         $ver = app('request')->input('ver');
+        $platform = app('request')->input('platform');
 
-        $path = config('services.file.path');
-        $patch_name = config('services.file.patch_name');
-        $patch_name = sprintf($patch_name, $ver);
+        // 解析token
+        $token_info = SystemTool::getTokenInfo(app('request')->header('JWT'));
+        $app_id = $token_info->client->app_id;
+
+        $is_dis_platform = config("services.client.{$app_id}.is_dis_platform");
+        $path = config("services.client.{$app_id}.download.path");
+        $patch_name = config("services.client.{$app_id}.download.file_name");
+        if ($is_dis_platform) {
+            $patch_name = sprintf($patch_name, $platform, $ver);
+        } else {
+            $patch_name = sprintf($patch_name, $ver);
+        }
 
         return response()->download($path . $patch_name);
     }

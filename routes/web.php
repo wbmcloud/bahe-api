@@ -32,4 +32,7 @@ $app->group(['middleware' => ['validator']], function () use ($app) {
     });
 });
 
+$app->post('storage/upload', 'StorageController@uploadAction');
+$app->post('storage/version', 'StorageController@versionAction');
+
 

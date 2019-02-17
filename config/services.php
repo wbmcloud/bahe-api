@@ -26,6 +26,10 @@ return [
                 'app_secret' => 'f9128ba451c51ce44fdd3bddf2fa45e7',
             ],
             'city_id' => 2340,
+            'download' => [
+                'path'      => '/data/game/file/',
+                'file_name' => 'MyAssets_issue%s.upk',
+            ]
         ],
         'we9rajfksnnp123dfs' => [
             'app_name' => 'yingkou',
@@ -46,9 +50,15 @@ return [
                 'app_secret' => 'badbaf9b1c078fe8c944b1009fb582e9',
             ],
         ],
-    ],
-    'file' => [
-        'path' => '/data/game/file/',
-        'patch_name' => 'MyAssets_issue%s.upk',
+        'faiejfjkn14jsk945k' => [
+            'app_name' => 'president',
+            'app_id' => 'faiejfjkn14jsk945k',
+            'app_secret' => 'JF)KLJIEWNXPPjkj8wjj1lju',
+            'download' => [
+                'path'      => '/data/game/file/',
+                'file_name' => '%s/MyAssets_issue%s.upk',
+            ],
+            'is_dis_platform' => true,
+        ]
     ]
 ];

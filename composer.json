@@ -10,7 +10,8 @@
         "vlucas/phpdotenv": "~2.2",
         "firebase/php-jwt": "v5.0.0",
         "predis/predis": "v1.1.1",
-        "verdant/xml2array": "dev-master"
+        "verdant/xml2array": "dev-master",
+        "qcloud/cos-sdk-v5": "1.*"
     },
     "autoload": {
         "psr-4": {
