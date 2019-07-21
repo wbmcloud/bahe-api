@@ -20,37 +20,18 @@ class GameController extends Controller
         // 解析token
         $token_info = SystemTool::getTokenInfo(app('request')->header('JWT'));
 
-        if (!isset($token_info->client->app_id) || SystemTool::isLocalDownload($token_info->client->app_id)) {
-            $version = Redis::get(CacheConst::HOT_UPDATE_ISSUE_VERSION);
-
-            if ($version == false) {
-                return $this->jsonResponse(['issues' => []]);
-            }
-
-            if (empty($client_ver)) {
-                $issues = Redis::hmget(CacheConst::HOT_UPDATE_FILE_ISSUES, range(1, $version));
-            } else {
-                if ($client_ver < $version) {
-                    // 获取所有的列表
-                    $issues = Redis::hmget(CacheConst::HOT_UPDATE_FILE_ISSUES, range($client_ver + 1, $version));
-                } else {
-                    $issues = [];
-                }
+        // 获取当前app的所有更新配置
+        $issues = Redis::hget(CacheConst::GAME_UPDATE_PATCH_CONFIG, $token_info->client->app_id, false);
+        if (isset($issues[$platform]) && !empty($issues[$platform])) {
+            $issues = $issues[$platform];
+        }
+        if ($client_ver < count($issues)) {
+            $pos = array_search($client_ver, array_keys(array_column($issues, null, 'version')));
+            if ($pos !== false) {
+                $issues = array_slice($issues, $pos + 1);
             }
         } else {
-            // 获取当前app的所有更新配置
-            $issues = Redis::hget(CacheConst::GAME_UPDATE_PATCH_CONFIG, $token_info->client->app_id, false);
-            if (isset($issues[$platform]) && !empty($issues[$platform])) {
-                $issues = $issues[$platform];
-            }
-            if ($client_ver < count($issues)) {
-                $pos = array_search($client_ver, array_keys(array_column($issues, null, 'version')));
-                if ($pos !== false) {
-                    $issues = array_slice($issues, $pos + 1);
-                }
-            } else {
-                $issues = [];
-            }
+            $issues = [];
         }
 
         $issues = array_map(function ($issue) use ($token_info) {

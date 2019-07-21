@@ -23,8 +23,6 @@ $app->group(['middleware' => ['validator']], function () use ($app) {
         $app->post('game/hotupdate', 'GameController@hotUpdateAction');
         $app->get('game/download', 'GameController@downloadAction');
         $app->post('game/download', 'GameController@downloadAction');
-        $app->get('gate/serverlist', 'GateController@serverListAction');
-        $app->post('gate/serverlist', 'GateController@serverListAction');
         $app->post('game/bindagent', 'GameController@bindAgentAction');
         $app->get('game/bindagent', 'GameController@bindAgentAction');
         $app->post('game/bindstatus', 'GameController@bindStatusAction');
@@ -32,6 +30,8 @@ $app->group(['middleware' => ['validator']], function () use ($app) {
     });
 });
 
+$app->get('gate/serverlist', 'GateController@serverListAction');
+$app->post('gate/serverlist', 'GateController@serverListAction');
 $app->post('storage/upload', 'StorageController@uploadAction');
 $app->post('storage/version', 'StorageController@versionAction');
 

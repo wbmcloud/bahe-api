@@ -60,4 +60,6 @@ class AuthController extends Controller
             'jwt' => JWT::encode($token, $key)
         ]);
     }
+
+
 }

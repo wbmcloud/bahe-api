@@ -33,6 +33,7 @@ class BaheException extends \Exception
     const APP_NONCE_NOT_VALID = 200402;
 
     const AGENT_UK_NOT_VALID_CODE = 200403;
+    const GAME_TYPE_NOT_VALID_CODE = 200404;
 
     public static $error_msg = [
         self::API_CLIENT_MISS_CONFIG => '配置文件不存在',
@@ -51,8 +52,8 @@ class BaheException extends \Exception
         self::APP_TIME_NOT_VALID => '时间不合法',
         self::APP_NONCE_NOT_VALID => '随机串不合法',
         self::API_UNKNOWN_ERROR => '未知错误',
-        self::AGENT_UK_NOT_VALID_CODE => '代理唯一标识不合法'
-
+        self::AGENT_UK_NOT_VALID_CODE => '代理唯一标识不合法',
+        self::GAME_TYPE_NOT_VALID_CODE => '游戏类型不合法'
     ];
 
     public function __construct($code, $message = null)
